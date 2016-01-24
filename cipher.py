@@ -13,6 +13,15 @@
 '''
 
 def encode(message, s, n):
+	'''Encodes text via a Double Caesar cipher.
+
+	Parameters:
+	message - Plain text to be encoded
+	s		- Password or key
+	n 		- Number of times to use the key before the message is used
+
+	Returns: The string cipherText.
+	'''
 	alpha = 'abcdefghijklmnopqrstuvwxyz'
 	
 	cleanMessage = ''
@@ -27,7 +36,7 @@ def encode(message, s, n):
 	
 	i = 0
 	cipherText = ''
-	# 
+	# Shifts each character based on the index of the pertinent charcter in the key
 	for char in cleanMessage:
 		char = alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 26]
 		cipherText += char

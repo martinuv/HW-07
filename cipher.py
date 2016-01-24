@@ -11,9 +11,10 @@
 
     CS111, Winter 2016
 '''
+import MyAss
 
 def encode(message, s, n):
-    
+
 
 def decode(ciphertext, s, n):
     

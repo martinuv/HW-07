@@ -16,4 +16,4 @@ def encode(message, s, n):
     password = s
 
 def decode(ciphertext, s, n):
-    
+    password = s

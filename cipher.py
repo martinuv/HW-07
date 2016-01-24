@@ -14,17 +14,24 @@
 
 def encode(message, s, n):
 	alpha = 'abcdefghijklmnopqrstuvwxyz'
-	charsAfterKey = len(message) - len(s) * n
-	key = s * n + message[:charsAfterKey]
+	
+	cleanMessage = ''
+	# Removes non-alpha characters from message
+	for char in message:
+		if alpha.find(char) != -1:
+			cleanMessage += char
+
+	# Calculates how many characters of the message to use after the key
+	charsAfterKey = len(cleanMessage) - len(s) * n
+	longKey = s * n + cleanMessage[:charsAfterKey]
 	
 	i = 0
 	cipherText = ''
-	for char in message:
-		print(char)
-		char = alpha[(alpha.find(key[i]) + alpha.find(char)) % 26]
-		print(char)
-		i += 1
+	# 
+	for char in cleanMessage:
+		char = alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 26]
 		cipherText += char
+		i += 1
 
 	return cipherText
 

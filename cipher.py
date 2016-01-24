@@ -13,6 +13,7 @@
 '''
 
 def encode(message, s, n):
-
+    
 
 def decode(ciphertext, s, n):
+    

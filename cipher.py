@@ -1,41 +1,24 @@
-#<<<<<<< HEAD
-#<<<<<<< HEAD
-#def encode(message, s, n):
-    
-#=======
-#=======
-#>>>>>>> origin/master
-'''
-cipher.py
+'''cipher.py
 
-Martin Hoffman
-Sam Nozaki
+    Martin Hoffman
+    Sam Nozaki
 
-Created 1/22/2015
-Python Version: 3.5
+    Created 1/22/2015
+    Python Version: 3.5
 
-Allows the user to encode text with a password via a double Caesar (Vignere) cipher.
+    Allows the user to encode text with a password via a double Caesar (Vignere) cipher.
 
-CS111, Winter 2016
+    CS111, Winter 2016
 '''
 
 def encode(message, s, n):
     '''
     Encodes text via a double Caesar cipher.
 
-    <<<<<<< HEAD
-    def decode(ciphertext, s, n):
-    <<<<<<< HEAD
-    password = s
-    >>>>>>> origin/master
-    =======
-    password = s
-    >>>>>>> origin/master
-    =======
     Parameters:
     message - Plain text to be encoded
-       s - Password or key
-       n - Number of times to use the key before the message is used
+    s       - Password or key
+    n       - Number of times to use the key before the message is used
 
     Returns: the string cipherText.
     '''
@@ -94,5 +77,3 @@ def decode(cipherText, s, n):
         i += 1
    
     return message
-
-#>>>>>>> origin/master

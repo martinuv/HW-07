@@ -1,7 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 def encode(message, s, n):
     
 =======
+=======
+>>>>>>> origin/master
 '''cipher.py
 
     Martin Hoffman
@@ -20,5 +23,9 @@ def encode(message, s, n):
     password = s
 
 def decode(ciphertext, s, n):
+<<<<<<< HEAD
+    password = s
+>>>>>>> origin/master
+=======
     password = s
 >>>>>>> origin/master

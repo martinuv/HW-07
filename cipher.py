@@ -32,16 +32,13 @@ def encode(message, s, n):
         if char in alpha:
             cleanMessage += char
 
-    # Calculates how many characters of the message to use after the key
-    print(cleanMessage)
-    charsAfterKey = len(cleanMessage) - len(s) * n
-    longKey = s * n + cleanMessage[:charsAfterKey]
-    print(longKey)
+    longKey = getLongKey(cleanMessage, s, n)
+    
     i = 0
     cipherText = ''
-    # Shifts each character based on the index of the pertinent charcter in the key
+    # Shifts each character based on the index of the pertinent character in the key
     for char in cleanMessage:
-        cipherText += alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 26]
+        cipherText += alpha[(alpha.find(char) + alpha.find(longKey[i])) % 26]
         i += 1
         
     return cipherText
@@ -52,28 +49,41 @@ def decode(cipherText, s, n):
     
     Parameters:
     cipherText - Encoded text to be decoded
-    s          - Password or key string
+    s          - Password or key string, must be the longKey
     n          - Number of times to use the key before the message is used
     
     Returns: the string message 
     '''
-    
     alpha = 'abcdefghijklmnopqrstuvwxyz'
-    message = ''
-    
-    cipherText = cipherText.lower()
-    clean = ''
-    # Removes all non-alpha characters from cipherText
-    for ch in cipherText:
-        if ch in alpha:
-            clean += ch
-            
-    # longKey is a string that represents the complete key for the message
-    longKey = s * n + clean[:len(clean) - len(s) * n]
+    longKey = s
+
     i = 0
-    for ch in clean:
-        message += alpha[(alpha.find(ch) - alpha.find(longKey[i])) % 26]
-        # only works while the key is still s, when the loop reaches the part of longKey where it changes to the original message being the key, it stops working
+    message = ''
+    for char in cipherText:
+        message += alpha[alpha.find(char) - (alpha.find(longKey[i])) % 26]
         i += 1
-   
+
     return message
+
+def getLongKey(cleanMessage, s, n):
+    '''
+    Calculates how many characters of the message to use after the key
+
+    Parameters:
+    cleanMessage - Plain text, only alpha characters
+    s            - Password or key string
+    n            - Number of times to use the key before the message is used
+
+    Returns: The long version of the key with message characters included.
+    '''
+    charsAfterKey = len(cleanMessage) - len(s) * n
+    if charsAfterKey > 0:
+        longKey = s * n + cleanMessage[:charsAfterKey]
+    else:
+        longKey = ''
+        for i in range(len(cleanMessage)):
+            longKey += s[i % len(s)]
+
+    print('Your longKey is:', longKey)
+    print('Keep it secret! Keep it safe!')
+    return longKey

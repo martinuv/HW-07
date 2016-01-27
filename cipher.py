@@ -20,7 +20,8 @@ def encode(message, s, n):
 '''
 
 def encode(message, s, n):
-	'''Encodes text via a Double Caesar cipher.
+	'''
+    Encodes text via a Double Caesar cipher.
 
 <<<<<<< HEAD
 def decode(ciphertext, s, n):
@@ -32,11 +33,11 @@ def decode(ciphertext, s, n):
 >>>>>>> origin/master
 =======
 	Parameters:
-	message - Plain text to be encoded
-	s		- Password or key
-	n 		- Number of times to use the key before the message is used
+	   message - Plain text to be encoded
+	   s - Password or key
+	   n - Number of times to use the key before the message is encoded
 
-	Returns: The string cipherText.
+	Returns: the string cipherText.
 	'''
 	alpha = 'abcdefghijklmnopqrstuvwxyz'
 	
@@ -61,5 +62,15 @@ def decode(ciphertext, s, n):
 	return cipherText
 
 def decode(cipherText, s, n):
-	s = password
+    '''
+    Decodes text that has ben encoded with a double Caesar cipher.
+    
+    Parameters:
+        cipherText - encoded text to be decoded
+        s - password
+        n - number of times to use the password before the message is decoded
+    
+    Returns: the string message 
+    '''
+    
 >>>>>>> origin/master

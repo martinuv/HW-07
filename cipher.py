@@ -60,7 +60,7 @@ def decode(cipherText, s, n):
     i = 0
     message = ''
     for char in cipherText:
-        message += alpha[alpha.find(char) - (alpha.find(longKey[i])) % 26]
+        message += alpha[alpha.find(char) - alpha.find(longKey[i])]
         i += 1
 
     return message
@@ -89,22 +89,24 @@ def getLongKey(cleanMessage, s, n):
     return longKey
 
 def main():
-    operation = input('Would you like to encode or decode? ')
-
     while True:
+        operation = input('Would you like to encode or decode? ')
+
         if operation.lower() == 'encode':
-            message = input('Enter text to encode: ')
-            s = input('Enter a key: ')
-            n = input('Enter times to repeat the key: ')
-            encode(message, s, n)
+            message = str(input('Enter text to encode: '))
+            s = str(input('Enter a key: '))
+            n = int(input('Enter times to repeat the key: '))
+            print('Your encoded message is:\n', encode(message, s, n))
+            input('[Enter] to exit...')
             break
         elif operation.lower() == 'decode':
-            message = input('Enter the encoded text: ')
-            s = input('Enter your longKey: ')
-            decode(message, s, n = 1)
+            message = str(input('Enter the encoded text: '))
+            s = str(input('Enter your longKey: '))
+            print('Your decoded message is:\n', decode(message, s, n = 1))
+            input('[Enter] to exit...')
             break
         else:
-            'Please type either "Encode" or "Decode".'
+            print('Please type either "Encode" or "Decode".')
 
 if __name__ == '__main__':
     main()

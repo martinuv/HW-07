@@ -104,3 +104,30 @@ def encodeSpace(message, s, n):
         i += 1
         
     return cipherText
+
+def decodeSpace(cipherText, s, n):
+    # This will work once Martin commits his working version of decode so that I can copy/paste it to make this function work and then I can take credit for it
+    '''
+    Decodes text with spaces and new line characters that has been encoded with a double Caesar cipher.
+    
+    Parameters:
+    cipherText - Encoded text to be decoded
+    s          - Password or key string
+    n          - Number of times to use the key before the message is used
+    
+    Returns: the string message 
+    '''
+    
+    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
+    message = ''
+    
+    cipherText = cipherText.lower()
+    
+    # longKey is a string that represents the complete key for the message
+    longKey = s * n + clean[:len(clean) - len(s) * n]
+    i = 0
+    for ch in clean:
+        message += alpha[(alpha.find(ch) - alpha.find(longKey[i])) % 28]
+        i += 1
+        
+    return message

@@ -17,7 +17,7 @@ def encode(message, s, n):
 
     Parameters:
     message - Plain text to be encoded
-    s       - Password or key
+    s       - Password or key string
     n       - Number of times to use the key before the message is used
 
     Returns: the string cipherText.
@@ -51,9 +51,9 @@ def decode(cipherText, s, n):
     Decodes text that has ben encoded with a double Caesar cipher.
     
     Parameters:
-        cipherText - encoded text to be decoded
-        s - key string
-        n - number of times to use the password before the message is used as the key
+    cipherText - Encoded text to be decoded
+    s          - Password or key string
+    n          - Number of times to use the key before the message is used
     
     Returns: the string message 
     '''

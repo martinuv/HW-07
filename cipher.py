@@ -75,5 +75,32 @@ def decode(cipherText, s, n):
         message += alpha[(alpha.find(ch) - alpha.find(longKey[i])) % 26]
         # only works while the key is still s, when the loop reaches the part of longKey where it changes to the original message being the key, it stops working
         i += 1
-   
+       
     return message
+
+def encodeSpace(message, s, n):
+    '''
+    Encodes text with spaces and new line characters via a double Caesar cipher.
+
+    Parameters:
+    message - Plain text to be encoded
+    s       - Password or key string
+    n       - Number of times to use the key before the message is used
+
+    Returns: the string cipherText.
+    '''
+    
+    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
+    message = message.lower()
+
+    # Calculates how many characters of the message to use after the key
+    charsAfterKey = len(message) - len(s) * n
+    longKey = s * n + message[:charsAfterKey]
+    i = 0
+    cipherText = ''
+    # Shifts each character based on the index of the pertinent charcter in the key
+    for char in message:
+        cipherText += alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 28]
+        i += 1
+        
+    return cipherText

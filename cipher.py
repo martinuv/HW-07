@@ -77,3 +77,24 @@ def decode(cipherText, s, n):
         i += 1
    
     return message
+
+def main():
+    operation = input('Would you like to encode or decode? ')
+
+    while True:
+        if operation.lower() == 'encode':
+            message = input('Enter text to encode: ')
+            s = input('Enter a key: ')
+            n = input('Enter times to repeat the key: ')
+            encode(message, s, n)
+            break
+        elif operation.lower() == 'decode':
+            message = input('Enter the encoded text: ')
+            s = input('Enter your longKey: ')
+            decode(message, s, n = 1)
+            break
+        else:
+            'Please type either "Encode" or "Decode".'
+
+if __name__ == '__main__':
+    main()

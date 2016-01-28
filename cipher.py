@@ -32,7 +32,8 @@ def encode(message, s, n):
 
     i = 0
     cipherText = ''
-    # Shifts each character based on index of pertinent character in the key
+
+    # Encodes each character based on index of pertinent character in the key
     for char in cleanMessage:
         cipherText += alpha[(alpha.find(char) + alpha.find(longKey[i])) % 26]
         i += 1
@@ -52,13 +53,15 @@ def decode(cipherText, s, n):
     Returns: the string message
     '''
     alpha = 'abcdefghijklmnopqrstuvwxyz'
-
     i = 0
     message = ''
+
+    # Decodes each character based on index of pertinent character in the key
     for char in cipherText:
         message += alpha[alpha.find(char) - alpha.find(s[i])]
-        s += alpha[alpha.find(char) - alpha.find(s[i])]
         i += 1
+        # Adds decoded characters to key to be used later
+        s += alpha[alpha.find(char) - alpha.find(s[i])]
 
     return message
 
@@ -82,7 +85,8 @@ def encodeSpace(message, s, n):
 
     i = 0
     cipherText = ''
-    # Shifts each character based on index of pertinent character in the key
+
+    # Encodes each character based on index of pertinent character in the key
     for char in cleanMessage:
         cipherText += alpha[(alpha.find(char) + alpha.find(longKey[i])) % 28]
         i += 1
@@ -103,13 +107,15 @@ def decodeSpace(cipherText, s, n):
     Returns: the string message 
     '''
     alpha = 'abcdefghijklmnopqrstuvwxyz \n'
-
     i = 0
     message = ''
+
+    # Decodes each character based on index of pertinent character in the key
     for char in cipherText:
         message += alpha[alpha.find(char) - alpha.find(s[i])]
-        s += alpha[alpha.find(char) - alpha.find(s[i])]
         i += 1
+        # Adds decoded characters to key to be used later
+        s += alpha[alpha.find(char) - alpha.find(s[i])]
        
     return message
 
@@ -124,6 +130,7 @@ def getCleanMessage(message, alpha):
     Returns: The cleaned message.
     '''
     cleanMessage = ''
+
     for char in message:
         if char in alpha:
             cleanMessage += char
@@ -142,10 +149,14 @@ def getLongKey(cleanMessage, s, n):
     Returns: The long version of the key with message characters included.
     '''
     charsAfterKey = len(cleanMessage) - len(s) * n
+
     if charsAfterKey > 0:
+        # Sets longKey to the key repeated n times, concatenates requisite
+        # number of characters after key repetitions from original message
         longKey = s * n + cleanMessage[:charsAfterKey]
     else:
         longKey = ''
+        # Ensures that key repetitions don't excede characters of message
         for i in range(len(cleanMessage)):
             longKey += s[i % len(s)]
 
@@ -160,8 +171,11 @@ def main():
         spaces = input('Will your message have spaces or newlines? (Y/N) ')
         operation = input('Would you like to encode or decode? ')
 
+        # Checks that the user correctly answered the spaces prompt
         if spaces.lower() == 'y':
+            # Checks that the user correctly enter the encode/decode prompt
             if operation.lower() == 'encode':
+                # Collects parameters for encodeSpace from user
                 message = str(input('Enter text to encode: '))
                 s = str(input('Enter a key: '))
                 n = int(input('Enter times to repeat the key: '))
@@ -169,6 +183,7 @@ def main():
                 input('[Enter] to exit...')
                 break
             elif operation.lower() == 'decode':
+                # Collects parameters for decodeSpace from user
                 message = str(input('Enter the encoded text: '))
                 s = str(input('Enter your key: '))
                 n = int(input('Enter times to repeat the key: '))
@@ -176,9 +191,12 @@ def main():
                 input('[Enter] to exit...')
                 break
             else:
+                # Re-prompts the user if input was other than encode or decode
                 print('Please type either "Encode" or "Decode".')
-        elif: spaces.lower() == 'n':
+        elif spaces.lower() == 'n':
+            # Checks that the user correctly enter the encode/decode prompt
             if operation.lower() == 'encode':
+                # Collects parameters for encode from user
                 message = str(input('Enter text to encode: '))
                 s = str(input('Enter a key: '))
                 n = int(input('Enter times to repeat the key: '))
@@ -186,6 +204,7 @@ def main():
                 input('[Enter] to exit...')
                 break
             elif operation.lower() == 'decode':
+                # Collects parameters for decode from user
                 message = str(input('Enter the encoded text: '))
                 s = str(input('Enter your key: '))
                 n = int(input('Enter times to repeat the key: '))
@@ -193,8 +212,10 @@ def main():
                 input('[Enter] to exit...')
                 break
             else:
+                # Re-prompts the user if input was other than encode or decode
                 print('Please type either "Encode" or "Decode".')
         else:
+            # Re-prompts the user if input was other than y or n
             print('Please enter either "Y" or "N".')
 
 

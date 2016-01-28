@@ -6,128 +6,175 @@
     Created 1/22/2015
     Python Version: 3.5
 
-    Allows the user to encode text with a password via a double Caesar (Vignere) cipher.
+    Allows the user to encode text with a password via a double Caesar (Vignere)
+    cipher.
 
     CS111, Winter 2016
 '''
+
 
 def encode(message, s, n):
     '''
     Encodes text via a double Caesar cipher.
 
     Parameters:
-    message - Plain text to be encoded
-    s       - Password or key string
-    n       - Number of times to use the key before the message is used
+        message - Plain text to be encoded
+        s       - Password or key string
+        n       - Number of times to use the key before the message is used
 
     Returns: the string cipherText.
     '''
-    
     alpha = 'abcdefghijklmnopqrstuvwxyz'
     message = message.lower()
-    
-    cleanMessage = ''
-    # Removes non-alpha characters from message
-    for char in message:
-        if char in alpha:
-            cleanMessage += char
 
-    # Calculates how many characters of the message to use after the key
-    print(cleanMessage)
-    charsAfterKey = len(cleanMessage) - len(s) * n
-    longKey = s * n + cleanMessage[:charsAfterKey]
-    print(longKey)
+    cleanMessage = getCleanMessage(message, alpha)
+    longKey = getLongKey(cleanMessage, s, n)
+
     i = 0
     cipherText = ''
-    # Shifts each character based on the index of the pertinent charcter in the key
+    # Shifts each character based on index of pertinent character in the key
     for char in cleanMessage:
-        cipherText += alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 26]
+        cipherText += alpha[(alpha.find(char) + alpha.find(longKey[i])) % 26]
         i += 1
-        
+
     return cipherText
+
 
 def decode(cipherText, s, n):
     '''
     Decodes text that has ben encoded with a double Caesar cipher.
-    
+
     Parameters:
-    cipherText - Encoded text to be decoded
-    s          - Password or key string
-    n          - Number of times to use the key before the message is used
-    
+        cipherText - Encoded text to be decoded
+        s          - Password or key string
+        n          - Number of times to use the key before the message is used
+
+    Returns: the string message
+    '''
+    alpha = 'abcdefghijklmnopqrstuvwxyz'
+
+    i = 0
+    message = ''
+    for char in cipherText:
+        message += alpha[alpha.find(char) - alpha.find(s[i])]
+        s += alpha[alpha.find(char) - alpha.find(s[i])]
+        i += 1
+
+    return message
+
+
+def encodeSpace(message, s, n):
+    '''
+    Encodes text via a double Caesar cipher, inlcuding spaces and newlines.
+
+    Parameters:
+        message - Plain text to be encoded
+        s       - Password or key string
+        n       - Number of times to use the key before the message is used
+
+    Returns: the string cipherText.
+    '''
+    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
+    message = message.lower()
+
+    cleanMessage = getCleanMessage(message, alpha)
+    longKey = getLongKey(cleanMessage, s, n)
+
+    i = 0
+    cipherText = ''
+    # Shifts each character based on index of pertinent character in the key
+    for char in cleanMessage:
+        cipherText += alpha[(alpha.find(char) + alpha.find(longKey[i])) % 28]
+        i += 1
+
+    return cipherText
+
+
+def decodeSpace(cipherText, s, n):
+    '''
+    Decodes text that has ben encoded with a double Caesar cipher, inlcuding 
+    spaces and newlines.
+
+    Parameters:
+        cipherText - Encoded text to be decoded
+        s          - Password or key string
+        n          - Number of times to use the key before the message is used
+
     Returns: the string message 
     '''
-    
-    alpha = 'abcdefghijklmnopqrstuvwxyz'
-    message = ''
-    
-    cipherText = cipherText.lower()
-    clean = ''
-    # Removes all non-alpha characters from cipherText
-    for ch in cipherText:
-        if ch in alpha:
-            clean += ch
-            
-    # longKey is a string that represents the complete key for the message
-    longKey = s * n + clean[:len(clean) - len(s) * n]
+    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
+
     i = 0
-    for ch in clean:
-        message += alpha[(alpha.find(ch) - alpha.find(longKey[i])) % 26]
-        # only works while the key is still s, when the loop reaches the part of longKey where it changes to the original message being the key, it stops working
+    message = ''
+    for char in cipherText:
+        message += alpha[alpha.find(char) - alpha.find(s[i])]
+        s += alpha[alpha.find(char) - alpha.find(s[i])]
         i += 1
        
     return message
 
-def encodeSpace(message, s, n):
-    '''
-    Encodes text with spaces and new line characters via a double Caesar cipher.
+
+def getCleanMessage(message, alpha):
+    '''Removes characters not present in the "alphabet" from message.
 
     Parameters:
-    message - Plain text to be encoded
-    s       - Password or key string
-    n       - Number of times to use the key before the message is used
+        message - Text to be cleaned
+        alpha   - Alphabet to base cleaning off of
 
-    Returns: the string cipherText.
+    Returns: The cleaned message.
     '''
-    
-    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
-    message = message.lower()
-
-    # Calculates how many characters of the message to use after the key
-    charsAfterKey = len(message) - len(s) * n
-    longKey = s * n + message[:charsAfterKey]
-    i = 0
-    cipherText = ''
-    # Shifts each character based on the index of the pertinent charcter in the key
+    cleanMessage = ''
     for char in message:
-        cipherText += alpha[(alpha.find(longKey[i]) + alpha.find(char)) % 28]
-        i += 1
-        
-    return cipherText
+        if char in alpha:
+            cleanMessage += char
+            
+    return cleanMessage
 
-def decodeSpace(cipherText, s, n):
-    # This will work once Martin commits his working version of decode so that I can copy/paste it to make this function work and then I can take credit for it
-    '''
-    Decodes text with spaces and new line characters that has been encoded with a double Caesar cipher.
-    
+
+def getLongKey(cleanMessage, s, n):
+    '''Calculates how many characters of the message to use after the key.
+
     Parameters:
-    cipherText - Encoded text to be decoded
-    s          - Password or key string
-    n          - Number of times to use the key before the message is used
-    
-    Returns: the string message 
+        cleanMessage - Plain text, only alpha characters
+        s            - Password or key string
+        n            - Number of times to use the key before the message is used
+
+    Returns: The long version of the key with message characters included.
     '''
-    
-    alpha = 'abcdefghijklmnopqrstuvwxyz \n'
-    message = ''
-    
-    cipherText = cipherText.lower()
-    
-    # longKey is a string that represents the complete key for the message
-    longKey = s * n + clean[:len(clean) - len(s) * n]
-    i = 0
-    for ch in clean:
-        message += alpha[(alpha.find(ch) - alpha.find(longKey[i])) % 28]
-        i += 1
-        
-    return message
+    charsAfterKey = len(cleanMessage) - len(s) * n
+    if charsAfterKey > 0:
+        longKey = s * n + cleanMessage[:charsAfterKey]
+    else:
+        longKey = ''
+        for i in range(len(cleanMessage)):
+            longKey += s[i % len(s)]
+
+    return longKey
+
+
+def main():
+    '''Prompts the user to supply all the information necessary to encode
+    or decode text. Prints relevant information to the console.
+    '''
+    while True:
+        operation = input('Would you like to encode or decode? ')
+
+        if operation.lower() == 'encode':
+            message = str(input('Enter text to encode: '))
+            s = str(input('Enter a key: '))
+            n = int(input('Enter times to repeat the key: '))
+            print('Your encoded message is:\n', encode(message, s, n))
+            input('[Enter] to exit...')
+            break
+        elif operation.lower() == 'decode':
+            message = str(input('Enter the encoded text: '))
+            s = str(input('Enter your key: '))
+            print('Your decoded message is:\n', decode(message, s, n = 1))
+            input('[Enter] to exit...')
+            break
+        else:
+            print('Please type either "Encode" or "Decode".')
+
+
+if __name__ == '__main__':
+    main()

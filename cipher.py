@@ -169,7 +169,8 @@ def main():
         elif operation.lower() == 'decode':
             message = str(input('Enter the encoded text: '))
             s = str(input('Enter your key: '))
-            print('Your decoded message is:\n', decode(message, s, n = 1))
+            print('Enter times to repeat the key: ')
+            print('Your decoded message is:\n', decode(message, s, n))
             input('[Enter] to exit...')
             break
         else:

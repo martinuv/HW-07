@@ -157,24 +157,45 @@ def main():
     or decode text. Prints relevant information to the console.
     '''
     while True:
+        spaces = input('Will your message have spaces or newlines? (Y/N) ')
         operation = input('Would you like to encode or decode? ')
 
-        if operation.lower() == 'encode':
-            message = str(input('Enter text to encode: '))
-            s = str(input('Enter a key: '))
-            n = int(input('Enter times to repeat the key: '))
-            print('Your encoded message is:\n', encode(message, s, n))
-            input('[Enter] to exit...')
-            break
-        elif operation.lower() == 'decode':
-            message = str(input('Enter the encoded text: '))
-            s = str(input('Enter your key: '))
-            n = int(input('Enter times to repeat the key: '))
-            print('Your decoded message is:\n', decode(message, s, n))
-            input('[Enter] to exit...')
-            break
+        if spaces.lower() == 'y':
+            if operation.lower() == 'encode':
+                message = str(input('Enter text to encode: '))
+                s = str(input('Enter a key: '))
+                n = int(input('Enter times to repeat the key: '))
+                print('Your encoded message is:\n', encodeSpace(message, s, n))
+                input('[Enter] to exit...')
+                break
+            elif operation.lower() == 'decode':
+                message = str(input('Enter the encoded text: '))
+                s = str(input('Enter your key: '))
+                n = int(input('Enter times to repeat the key: '))
+                print('Your decoded message is:\n', decodeSpace(message, s, n))
+                input('[Enter] to exit...')
+                break
+            else:
+                print('Please type either "Encode" or "Decode".')
+        elif: spaces.lower() == 'n':
+            if operation.lower() == 'encode':
+                message = str(input('Enter text to encode: '))
+                s = str(input('Enter a key: '))
+                n = int(input('Enter times to repeat the key: '))
+                print('Your encoded message is:\n', encode(message, s, n))
+                input('[Enter] to exit...')
+                break
+            elif operation.lower() == 'decode':
+                message = str(input('Enter the encoded text: '))
+                s = str(input('Enter your key: '))
+                n = int(input('Enter times to repeat the key: '))
+                print('Your decoded message is:\n', decode(message, s, n))
+                input('[Enter] to exit...')
+                break
+            else:
+                print('Please type either "Encode" or "Decode".')
         else:
-            print('Please type either "Encode" or "Decode".')
+            print('Please enter either "Y" or "N".')
 
 
 if __name__ == '__main__':
